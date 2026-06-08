@@ -1,0 +1,121 @@
+{
+  "theme": "dark",
+  "archetype": "5 (Luxury)",
+  "brand_voice": "Premium but not sterile. Honest, direct, and educational. Design-aware. Anti-pressure. Anti-generic-contractor. Intersects Bentley, punk rock, and posh art student.",
+  "colors": {
+    "background_base": "#111111",
+    "background_surface": "#151515",
+    "background_elevated": "#1A1A1A",
+    "text_primary": "#EDEDED",
+    "text_secondary": "#A1A1AA",
+    "accent_copper": "#C47B4F",
+    "accent_patina": "#6B8E7B",
+    "border_subtle": "#27272A"
+  },
+  "typography": {
+    "fonts": {
+      "display": "['Termina', 'Cabinet Grotesk', 'Syne', 'sans-serif']",
+      "body": "['Inter', 'sans-serif']"
+    },
+    "rules": {
+      "h1": "text-5xl md:text-6xl tracking-tighter uppercase font-medium text-[#ededed]",
+      "h2": "text-3xl md:text-4xl tracking-tight uppercase font-medium text-[#ededed]",
+      "h3": "text-2xl md:text-3xl tracking-tight text-[#ededed]",
+      "body": "text-base md:text-lg leading-relaxed text-[#ededed]/80 font-light",
+      "eyebrow": "text-xs md:text-sm tracking-[0.2em] uppercase text-[#C47B4F]",
+      "general": "Upper and lower casing used deliberately. Medium and heavy weights for hierarchy. Rarely use bold. No drop-shadow text."
+    }
+  },
+  "spacing_and_layout": {
+    "philosophy": "Editorial, asymmetric, strong whitespace, magazine-style. Avoid generic SaaS cards and rounded heavy layouts.",
+    "grid_system": "Use pure HTML/Tailwind CSS grid. grid-cols-1 md:grid-cols-12 with generous gaps (gap-8 to gap-16).",
+    "containers": "Use px-6 md:px-12 lg:px-24 py-20 md:py-32 for sections."
+  },
+  "visual_details": {
+    "textures": "Analogue editorial details sparingly: subtle halftone dots, slight grain overprint, tasteful collage accents. Implemented via CSS background patterns or opacity layers.",
+    "borders": "1px solid borders using border-[#ededed]/10 for structure instead of shadows.",
+    "shadows": "DO NOT USE drop shadows. Flat, rectangular, and dense styling.",
+    "radii": "Sharp edges (rounded-none).",
+    "overlays": "Hero images must use a gradient overlay (e.g., bg-gradient-to-t from-[#111111] via-[#111111]/80 to-transparent) to ensure text readability without killing the image."
+  },
+  "sections": [
+    {
+      "name": "1. Hero",
+      "instructions": "Full-bleed background image with heavy bottom gradient to merge into #111111. Eyebrow: 'Indianapolis Metro \u00b7 Western Chicago Suburbs'. H1: 'Because the details matter.' Lead paragraph. Two CTAs (Primary: 'Start with your project', Secondary: 'See real cost ranges'). Trust signals row below CTAs.",
+      "components": ["Custom HTML/Tailwind", "Lucide React (Icons)"]
+    },
+    {
+      "name": "2. Direct Answer Intro",
+      "instructions": "AEO/answer-engine-extractable paragraph. Large editorial text (text-2xl or text-3xl). Asymmetrical layout, off-centered. Focus on why the exterior decision matters.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "3. What We Do",
+      "instructions": "Six service systems: Roofing, Windows & Doors, Siding, Gutters & Gutter Guards, Insurance Claims, Commercial Exterior Work. Layout as an architectural list or editorial grid (not standard SaaS cards). Each block explains 'what the decision really is'.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "4. Real Cost Ranges",
+      "instructions": "Data section presenting median costs from 1,317 estimates. Use an editorial table or stat layout (NOT SaaS cards). Typography-driven numbers. Clear labeling that these are planning ranges, not quotes.",
+      "components": ["Custom HTML/Tailwind grid or heavily customized Shadcn Table"]
+    },
+    {
+      "name": "5. How We Work",
+      "instructions": "5 steps: Listen first, Inspect the condition, Specify the system, Price the real scope, Manage the work. Vertical timeline or horizontal scrolling typographic list.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "6. Founder / Ethos",
+      "instructions": "Story of Jon Strand. Image of artisan/craftsmanship. Text focus on Herron School of Art background, craft + design eye. Magazine article spread layout.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "7. Project Proof",
+      "instructions": "Real stories (Caleb, Jay). Use asymmetrical image + text overlapping to feel like a premium editorial. High contrast, authentic photography.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "8. Where We Work",
+      "instructions": "Lists of Indiana cities + Illinois cities. Typography-led multi-column list. Very clean, architectural alignment.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "9. Common Questions",
+      "instructions": "FAQ accordion. 8 questions matching FAQPage schema. Minimalist borders (border-b only), no background cards.",
+      "components": ["Shadcn Accordion"]
+    },
+    {
+      "name": "10. Final CTA",
+      "instructions": "Start with the question that matters most. Massive typography. Two buttons. High contrast.",
+      "components": ["Custom HTML/Tailwind"]
+    },
+    {
+      "name": "11. Footer",
+      "instructions": "Visible NAP (addresses, phone, email, hours). Very clean grid, architectural spacing. Links to future routes.",
+      "components": ["Custom HTML/Tailwind"]
+    }
+  ],
+  "components_and_routes": {
+    "navigation": "Desktop + mobile nav. Fixed or sticky header, blending with background (solid #111111 or dark blur). Links: /roofing/, /windows-doors/, /siding/, /gutters/, /cost-scope-index/, /service-areas/, /project-proof/, /start-here/.",
+    "buttons": "Primary CTA: bg-[#ededed] text-[#111111] hover:bg-[#c47b4f] hover:text-[#ededed] transition-colors. Secondary CTA: border border-[#ededed] text-[#ededed] hover:bg-[#ededed]/10 transition-colors."
+  },
+  "media_assets": {
+    "hero_background": "https://images.unsplash.com/photo-1765734386931-1639097a69cb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBob21lJTIwZGFyayUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc4MDk0NzAzNHww&ixlib=rb-4.1.0&q=85",
+    "founder_artisan": "https://images.unsplash.com/photo-1721508490084-1b1de5b230d4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHw0fHxhcnRpc2FuJTIwY3JhZnRzbWFuJTIwd29ya2luZyUyMG9uJTIwYXJjaGl0ZWN0dXJhbCUyMGRldGFpbHN8ZW58MHx8fHwxNzgwOTQ3MDM0fDA&ixlib=rb-4.1.0&q=85",
+    "roofing_texture": "https://images.unsplash.com/photo-1764983255396-4c4545e93cfb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwztHxtb2Rlcm4lMjByb29maW5nJTIwY29wcGVyJTIwcGF0aW5hJTIwZXh0ZXJpb3J8ZW58MHx8fHwxNzgwOTQ3MDM1fDA&ixlib=rb-4.1.0&q=85",
+    "project_proof_1": "https://images.unsplash.com/photo-1776186243408-3c0489503faa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob21lJTIwZGFyayUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc4MDk0NzAzNHww&ixlib=rb-4.1.0&q=85",
+    "project_proof_2": "https://images.unsplash.com/photo-1761442137960-a89d97ab6b27?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBob21lJTIwZGFyayUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc4MDk0NzAzNHww&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": [
+    "Write code strictly in .js/.jsx, NOT .tsx.",
+    "Do NOT use emojis, em dashes, or generic contractor language.",
+    "All interactive and key informational elements MUST include a 'data-testid' attribute (e.g., data-testid='hero-primary-cta').",
+    "Do not use Shadcn 'Card' components for layout. Rely on pure HTML/Tailwind to build architectural, flat, dense grids.",
+    "Adhere strictly to colors #111111, #151515, and #ededed. Avoid all purple/blue SaaS gradients or any drop-shadows on text/cards.",
+    "Implement the custom font stack for display headers (Termina/Cabinet Grotesk) and body text (Inter) in tailwind.config.js.",
+    "Keep animations very subtle (fade in, slow translate) to preserve page speed and editorial feel.",
+    "Use <hr> or 1px border-t border-[#27272A] to define separation between sections instead of heavy drop shadows.",
+    "Ensure typography hierarchy is flawless. Huge headings must be offset by lots of negative space.",
+    "Do not invent fake reviews or numbers. Use the exact data from the problem statement."
+  ]
+}
