@@ -95,7 +95,7 @@ export const Nav = () => {
       {open && (
         <div
           data-testid="mobile-menu"
-          className="lg:hidden fixed inset-0 top-16 md:top-20 bg-ink z-40 overflow-y-auto"
+          className="lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-ink z-40 overflow-y-auto"
         >
           <div className="shell py-10 flex flex-col">
             <ul className="flex flex-col">

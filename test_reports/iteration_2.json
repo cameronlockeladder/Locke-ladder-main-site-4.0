@@ -1,0 +1,57 @@
+{
+  "summary": "RETEST of mobile menu overlay fix at 390x844. Main agent's attempted fix (changing className to 'fixed inset-x-0 top-16 md:top-20 bottom-0 ...') did NOT resolve the bug. The overlay still computes to height:0 because the parent <header> has `backdrop-blur-md` (backdrop-filter: blur(12px)) which per CSS spec creates a containing block for fixed-position descendants. So the menu's `top:64px; bottom:0` is computed relative to the 64px-tall header, not the viewport, giving height = 64 - 64 - 0 = 0px. The siding nav link tap is intercepted by the underlying Hero/Nav because the overlay is effectively invisible/non-interactive. Escape, scroll-lock, aria-expanded toggles, and horizontal-overflow regression all PASS.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "Nav.jsx (mobile-menu overlay)",
+        "issue": "Mobile menu overlay still collapses to height:0 at 390x844. Computed style: position:fixed, top:64px, bottom:0px, height:0px. Reason: parent <header> has backdrop-filter:blur(12px) (Tailwind `backdrop-blur-md`) which creates a containing block for fixed-positioned descendants. As a result, `bottom-0` is measured against the 64px header, not the viewport. The menu links are not visible and pointer taps are intercepted by Hero/Nav.",
+        "selector": "[data-testid='mobile-menu']",
+        "priority": "CRITICAL"
+      },
+      {
+        "component": "Nav.jsx (mobile-nav-link-siding)",
+        "issue": "Real pointer tap on data-testid='mobile-nav-link-siding' is intercepted (Playwright reports <nav> / Hero subtree intercepts pointer events) and click timed out at 3s. Navigation to /siding/ never happens. Direct consequence of the height:0 overlay bug above.",
+        "selector": "[data-testid='mobile-nav-link-siding']",
+        "priority": "CRITICAL"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "passed_tests": [
+    "Body scroll lock (document.body.style.overflow === 'hidden' while open)",
+    "Body scroll release (overflow === '' after Escape close)",
+    "Escape closes overlay (mobile-menu removed from DOM)",
+    "aria-expanded toggles true on open, false on close",
+    "No horizontal overflow at 390px (scrollWidth 390 == clientWidth 390)",
+    "Toggle button (data-testid='mobile-menu-toggle') switches between Menu and X icons"
+  ],
+  "failed_tests": [
+    "Overlay visual coverage (height is 0, not viewportH - 64)",
+    "Overlay opaque dark background visible to user (set to rgb(17,17,17) on element but invisible due to height:0 + overflow-y-auto clipping inner content)",
+    "Real pointer tap on mobile-nav-link-siding navigates to /siding/ (click intercepted, timeout)"
+  ],
+  "test_report_links": [],
+  "action_items": [
+    "Fix mobile menu containing-block issue in /app/frontend/src/components/site/Nav.jsx. Recommended options (in order of safety): (A) Replace `bottom-0` with an explicit height that does not depend on containing block, e.g. `h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)]` (or use `100dvh` for mobile address-bar safety). This bypasses the containing-block trap since `height` is intrinsic, not edge-anchored. (B) Render the mobile menu as a sibling of <header> (e.g., via a React portal to document.body) so its fixed positioning resolves against the viewport. (C) Remove `backdrop-blur-md` from the <header>, but this changes the intended glass effect and is not recommended.",
+    "After fix, re-verify: overlay getBoundingClientRect().height ~= window.innerHeight - 64 at 390x844, bg is rgb(17,17,17), and a real tap on data-testid='mobile-nav-link-siding' navigates to /siding/ rendering data-testid='coming-soon' and closes the menu."
+  ],
+  "critical_code_review_comments": [
+    "Nav.jsx line 98: `fixed inset-x-0 top-16 md:top-20 bottom-0` is unreliable because the ancestor <header> uses `backdrop-blur-md`. Any CSS containing-block-creating ancestor (transform, filter, backdrop-filter, perspective, contain, will-change) traps fixed descendants. Prefer explicit height (e.g., `h-[calc(100dvh-4rem)]`) for the mobile overlay, or portal it out of the header.",
+    "Nav.jsx line 41-49: the keydown listener is bound to `window` and toggled per render of `open` — works but consider also early-return when `!open` to avoid unnecessary state churn. Minor."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "N/A (skipped)", "frontend": "62% (5/8 retest checks passed; 3 core overlay assertions fail)" },
+  "test_credentials": "N/A (public homepage)",
+  "seed_data_creation": "None",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "The mobile menu overlay bug at 390x844 is still present after iteration_1 fix. Root cause is a CSS containing-block trap: the parent <header> uses Tailwind `backdrop-blur-md` (backdrop-filter:blur(12px)) which makes `position:fixed` descendants positioned relative to the header, not the viewport. So `top:64px; bottom:0` => height:0. Inner child renders at top:64,height:769 visually but is clipped by parent `overflow-y-auto` with height:0, so the menu is invisible and taps on nav links are intercepted by underlying Hero/Nav. All other behaviors (Escape close, scroll-lock, aria-expanded, no horizontal overflow at 390px) are working. After main agent applies the height-based fix (option A) or portal (option B), re-verify only the mobile menu overlay flow.",
+  "rca of the issue": {
+    "symptom": "data-testid='mobile-menu' has getBoundingClientRect().height === 0 at viewport 390x844; menu links appear visually missing; tap on data-testid='mobile-nav-link-siding' is intercepted by Hero/Nav and times out.",
+    "root_cause": "CSS containing block. The mobile menu uses `position:fixed; top:64px; bottom:0` but its ancestor <header> has `backdrop-filter: blur(12px)` (via Tailwind `backdrop-blur-md`). Per CSS spec (https://www.w3.org/TR/filter-effects-1/#backdrop-filter-property), any non-`none` backdrop-filter creates a new containing block for ALL descendants, including `position:fixed`. Therefore the menu's top/bottom are resolved against the 64px header box (not viewport), producing height = 64 − 64 − 0 = 0.",
+    "reproduction": "1) Open site at 390x844. 2) Tap hamburger (data-testid='mobile-menu-toggle'). 3) Inspect [data-testid='mobile-menu']: computed top:64px, bottom:0px, height:0px; offsetParent === HEADER. 4) Inner child correctly sized (height ~769px) but clipped by parent overflow-y-auto with height 0. 5) Tap on mobile-nav-link-siding times out — intercepted by Hero/Nav.",
+    "mitigation_recommended": "In /app/frontend/src/components/site/Nav.jsx replace the overlay className `lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-ink z-40 overflow-y-auto` with one of: (A) `lg:hidden fixed inset-x-0 top-16 md:top-20 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] bg-ink z-40 overflow-y-auto` — uses explicit height (dvh handles mobile URL bar). (B) Move the overlay outside <header> via React portal so fixed positioning resolves against the viewport."
+  }
+}
