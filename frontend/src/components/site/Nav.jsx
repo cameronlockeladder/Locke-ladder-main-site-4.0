@@ -86,6 +86,7 @@ export const Nav = () => {
           onClick={() => setOpen((v) => !v)}
           data-testid="mobile-menu-toggle"
           aria-expanded={open}
+          aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           className="lg:hidden inline-flex items-center justify-center h-11 w-11 -mr-2 text-paper"
         >
@@ -96,6 +97,7 @@ export const Nav = () => {
 
       {open && (
         <div
+          id="mobile-menu"
           data-testid="mobile-menu"
           className="lg:hidden fixed inset-x-0 top-16 md:top-20 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] bg-ink z-40 overflow-y-auto"
         >
