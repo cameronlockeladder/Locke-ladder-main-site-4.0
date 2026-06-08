@@ -3,41 +3,225 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A product of emergent.sh" />
+        <meta name="theme-color" content="#111111" />
+
+        <title>Premium Roofing, Siding, Windows &amp; Doors - Indianapolis &amp; Chicago | Locke &amp; Ladder</title>
+        <meta name="description" content="Premium roofing, siding, windows, doors, gutters, and exterior decisions for high-end homes in Indianapolis and Chicago suburbs. Real costs, no pressure." />
+        <meta name="robots" content="index,follow" />
+        <link rel="canonical" href="https://lockeladder.com/" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Premium Roofing, Siding, Windows & Doors - Indianapolis & Chicago | Locke & Ladder" />
+        <meta property="og:description" content="Premium roofing, siding, windows, doors, gutters, and exterior decisions for high-end homes in Indianapolis and Chicago suburbs. Real costs, no pressure." />
+        <meta property="og:url" content="https://lockeladder.com/" />
+        <meta property="og:image" content="https://lockeladder.com/images/hero-home.jpg" />
+        <meta property="og:site_name" content="Locke & Ladder" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Premium Roofing, Siding, Windows & Doors - Indianapolis & Chicago | Locke & Ladder" />
+        <meta name="twitter:description" content="Premium roofing, siding, windows, doors, gutters, and exterior decisions for high-end homes in Indianapolis and Chicago suburbs. Real costs, no pressure." />
+        <meta name="twitter:image" content="https://lockeladder.com/images/hero-home.jpg" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
-        <!--
-        manifest.json provides metadata used when your web app is installed on a
-        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-        -->
-        <!--
-        Notice the use of %PUBLIC_URL% in the tags above.
-        It will be replaced with the URL of the `public` folder during the build.
-        Only files inside the `public` folder can be referenced from the HTML.
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="preload" href="%PUBLIC_URL%/fonts/TerminaTest-Heavy.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="%PUBLIC_URL%/fonts/TerminaTest-Medium.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" as="image" href="%PUBLIC_URL%/images/hero-home.jpg" fetchpriority="high" />
 
-        Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-        work correctly both with client-side routing and a non-root public URL.
-        Learn how to configure a non-root public URL by running `npm run build`.
-        -->
-        <title>Emergent | Fullstack App</title>
+        <style>
+            /* Termina (Test build, from Locke & Ladder brand assets). Covers A-Z a-z 0-9 , . - and space.
+               Inter is the per-glyph fallback for &, $, middle-dot and other characters. */
+            @font-face {
+                font-family: "Termina Test";
+                src: url("/fonts/TerminaTest-Medium.woff2") format("woff2");
+                font-weight: 500;
+                font-style: normal;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: "Termina Test";
+                src: url("/fonts/TerminaTest-Heavy.woff2") format("woff2");
+                font-weight: 800;
+                font-style: normal;
+                font-display: swap;
+            }
+        </style>
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": ["RoofingContractor", "LocalBusiness", "HomeAndConstructionBusiness"],
+              "@id": "https://lockeladder.com/#business",
+              "name": "Locke & Ladder",
+              "url": "https://lockeladder.com/",
+              "email": "info@lockeladder.com",
+              "telephone": "+1-317-662-2169",
+              "image": "https://lockeladder.com/images/hero-home.jpg",
+              "priceRange": "$$$",
+              "description": "Premium exterior design and roofing firm for high-end homes in the Indianapolis metro and the western Chicago suburbs. Roofing, siding, windows, doors, gutters, insurance claims, and commercial exterior work.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "3077 E 98th St, Suite 275",
+                "addressLocality": "Carmel",
+                "addressRegion": "IN",
+                "postalCode": "46280",
+                "addressCountry": "US"
+              },
+              "openingHoursSpecification": [
+                { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:30" },
+                { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "17:00" }
+              ],
+              "areaServed": [
+                { "@type": "City", "name": "Carmel, IN" },
+                { "@type": "City", "name": "Fishers, IN" },
+                { "@type": "City", "name": "Westfield, IN" },
+                { "@type": "City", "name": "Zionsville, IN" },
+                { "@type": "City", "name": "Noblesville, IN" },
+                { "@type": "City", "name": "Indianapolis, IN" },
+                { "@type": "City", "name": "Hinsdale, IL" },
+                { "@type": "City", "name": "Burr Ridge, IL" },
+                { "@type": "City", "name": "Oak Brook, IL" },
+                { "@type": "City", "name": "Western Springs, IL" },
+                { "@type": "City", "name": "Clarendon Hills, IL" },
+                { "@type": "City", "name": "La Grange, IL" },
+                { "@type": "City", "name": "Downers Grove, IL" },
+                { "@type": "City", "name": "Naperville, IL" }
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "reviewCount": "229",
+                "bestRating": "5"
+              },
+              "review": [
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Gilda Hickman" },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "From the first attic inspection to the final day, Locke & Ladder gave us complete confidence. They started exactly when promised, finished in six days, and helped us secure thousands in insurance funds we never would have pursued on our own. Top shelf."
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Amy" },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "My satisfaction level hasn't changed in 9 years."
+                }
+              ],
+              "sameAs": []
+            },
+            {
+              "@type": "LocalBusiness",
+              "@id": "https://lockeladder.com/#burr-ridge",
+              "name": "Locke & Ladder - Burr Ridge office",
+              "branchOf": { "@id": "https://lockeladder.com/#business" },
+              "telephone": "+1-708-859-6942",
+              "email": "info@lockeladder.com",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "8004 S Madison St",
+                "addressLocality": "Burr Ridge",
+                "addressRegion": "IL",
+                "postalCode": "60527",
+                "addressCountry": "US"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://lockeladder.com/#website",
+              "url": "https://lockeladder.com/",
+              "name": "Locke & Ladder",
+              "publisher": { "@id": "https://lockeladder.com/#business" },
+              "inLanguage": "en-US"
+            },
+            {
+              "@type": "WebPage",
+              "@id": "https://lockeladder.com/#webpage",
+              "url": "https://lockeladder.com/",
+              "name": "Premium Roofing, Siding, Windows & Doors - Indianapolis & Chicago | Locke & Ladder",
+              "description": "Premium roofing, siding, windows, doors, gutters, and exterior decisions for high-end homes in Indianapolis and Chicago suburbs. Real costs, no pressure.",
+              "isPartOf": { "@id": "https://lockeladder.com/#website" },
+              "about": { "@id": "https://lockeladder.com/#business" },
+              "primaryImageOfPage": "https://lockeladder.com/images/hero-home.jpg",
+              "inLanguage": "en-US"
+            },
+            {
+              "@type": "Dataset",
+              "@id": "https://lockeladder.com/#cost-scope-index",
+              "name": "Locke & Ladder Cost & Scope Index",
+              "description": "The Locke & Ladder Cost & Scope Index is based on 1,317 sanitized active estimates dated January 1, 2025 or later. Customer information is removed. The numbers are planning ranges, not final quotes.",
+              "creator": { "@id": "https://lockeladder.com/#business" },
+              "temporalCoverage": "2025-01-01/..",
+              "measurementTechnique": "Median of sanitized active estimates",
+              "variableMeasured": [
+                { "@type": "PropertyValue", "name": "Brava synthetic cedar roof median", "value": 118133, "unitText": "USD" },
+                { "@type": "PropertyValue", "name": "Standing seam metal roof median", "value": 26804, "unitText": "USD" },
+                { "@type": "PropertyValue", "name": "Gutters and gutter guards median", "value": 19358, "unitText": "USD" },
+                { "@type": "PropertyValue", "name": "Windows and doors median", "value": 16058, "unitText": "USD" },
+                { "@type": "PropertyValue", "name": "Siding and exterior trim median", "value": 5922, "unitText": "USD" },
+                { "@type": "PropertyValue", "name": "Repair and leak diagnostic median", "value": 1657, "unitText": "USD" }
+              ]
+            }
+          ]
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://lockeladder.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What does a Brava synthetic cedar roof cost?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Based on our active estimate data, a Brava synthetic cedar roof has a median of $118,133, with a middle range of $97,908 to $126,063 across twenty recent estimates. The final number depends on roof size, pitch, access, flashing, and the rest of the system. Treat this as a planning range, not a final quote." }
+            },
+            {
+              "@type": "Question",
+              "name": "When is Brava worth it?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Brava is worth considering when the home deserves the character of cedar or slate but the owner wants lower maintenance and a longer material life than traditional wood shake. It holds heavy texture and shadow lines while resisting the rot, insects, and weathering that age real cedar." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Locke & Ladder the cheapest contractor?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Usually not. A cheaper bid often leaves out flashing, ventilation, tear-off assumptions, trim, correct gutter sizing, supervision, or cleanup. We price the real scope, so the number you see is the number that finishes the job correctly." }
+            },
+            {
+              "@type": "Question",
+              "name": "Which roofing material is best for a high-end home?",
+              "acceptedAnswer": { "@type": "Answer", "text": "There is no single best material. The right choice depends on the architecture of the home, the budget, the performance you need, and how long you plan to stay. We walk through those tradeoffs before recommending a system." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you handle insurance claims?",
+              "acceptedAnswer": { "@type": "Answer", "text": "You file the claim. We document the damage, meet the adjuster, review the scope, and explain what should be repaired or replaced. You stay in control of the claim while we make sure the scope reflects the real condition of the exterior." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you only do roofing?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. We handle roofing, siding, windows, doors, gutters, gutter guards, soffit, fascia, trim, insurance claims, and commercial exterior work. The exterior is one connected system, so we look at how the parts work together." }
+            },
+            {
+              "@type": "Question",
+              "name": "What should a homeowner look for in a contractor quote?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A complete quote names materials and quantities, flashing details, the ventilation plan, tear-off assumptions, exclusions, warranty information, project management expectations, and cleanup standards. It should read like a specification, not a single line." }
+            },
+            {
+              "@type": "Question",
+              "name": "What makes a quote incomplete?",
+              "acceptedAnswer": { "@type": "Answer", "text": "An incomplete quote gives only a product name and a total price. It hides the scope, which is exactly where cost, performance, and risk actually live." }
+            }
+          ]
+        }
+        </script>
+
         <script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
-        <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
         <a
             id="emergent-badge"
             target="_blank"

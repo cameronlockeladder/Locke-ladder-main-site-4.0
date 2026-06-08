@@ -1,0 +1,88 @@
+{
+  "summary": "Frontend-only homepage tested at REACT_APP_BACKEND_URL on viewports 1440, 768, 390. All 11 home sections render, hero copy/CTAs/image/trust signals correct, desktop nav (7 links + Start CTA) navigates and ComingSoon returns home, cost ranges (6 rows + medians + 1,317 disclaimer + CTA) match, FAQ accordion (8 items) expands/collapses with first answer containing $118,133, project proof images + reviews + Google rating present, footer NAP + offices + phone + email + hours correct, Final CTAs route correctly, Termina font applied on H1, no forbidden content (no emojis, no em-dash, no 463-298-9989, no lockeandladder.com), no horizontal overflow at any tested viewport, no console errors. ONE CRITICAL MOBILE BUG: at 390px the mobile menu opens (state, aria-expanded, X icon, links in DOM) but its container collapses to height:0, so the bg-ink background is missing and nav links visually blend into hero behind them; clicks on the links are intercepted by the fixed <nav> header (Playwright click times out, JS .click() still navigates). Escape-to-close also could not be verified because the visual menu state is broken.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "site/Nav.jsx mobile menu overlay",
+        "issue": "Mobile menu container [data-testid='mobile-menu'] reports getBoundingClientRect height=0 at viewport 390x844 even though display:block and visibility:visible. The bg-ink solid background therefore does not cover the page; menu links (mobile-nav-link-*) render with correct y positions but appear over the hero with no opaque backdrop. elementFromPoint at the center of mobile-nav-link-siding returns the H1 underneath, and the fixed <nav> at z-50 intercepts Playwright click on the link (JS .click() still navigates). Root cause is the Tailwind class combo on the overlay: 'fixed inset-0 top-16 md:top-20 bg-ink z-40 overflow-y-auto' — bottom:0 from inset-0 is not winning, so the element has zero height. Fix: replace with explicit height, e.g. 'fixed left-0 right-0 top-16 md:top-20 bottom-0' or 'fixed inset-x-0 top-16 md:top-20 bottom-0' or add 'h-[calc(100svh-4rem)] md:h-[calc(100svh-5rem)]'.",
+        "selector": "[data-testid='mobile-menu']",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Mobile nav link click",
+        "issue": "Clicking [data-testid='mobile-nav-link-siding'] (and any other mobile nav link) via real pointer is blocked because the menu has no visual area and the fixed header at z-50 intercepts the click. Real users on mobile cannot navigate via the menu reliably (taps will hit the header or the hero content underneath). The Esc-to-close behavior could not be reliably verified for the same visual-collapse reason.",
+        "affected_selectors": ["[data-testid='mobile-menu']", "[data-testid^='mobile-nav-link-']"]
+      }
+    ],
+    "design_issues": []
+  },
+  "verified_checks": {
+    "sections_in_order": ["site-nav","hero","direct-answer","what-we-do","cost-ranges","how-we-work","founder","project-proof","where-we-work","faq","final-cta","site-footer"],
+    "hero_h1": "Because the details matter.",
+    "hero_eyebrow": "Indianapolis Metro · Western Chicago Suburbs",
+    "hero_image_loaded": true,
+    "hero_cta_primary_href": "/start-here/",
+    "hero_cta_secondary_href": "/cost-scope-index/",
+    "hero_trust_signal_count": 5,
+    "hero_trust_includes_5_0_229": true,
+    "desktop_nav_link_count_1440": 7,
+    "desktop_nav_cta_start_visible": true,
+    "windows_doors_route_renders_coming_soon": true,
+    "coming_soon_home_returns_to_root": true,
+    "cost_rows": 6,
+    "cost_medians_match_all_six": true,
+    "cost_disclaimer_includes_1317_sanitized": true,
+    "cost_cta_href": "/cost-scope-index/",
+    "faq_count": 8,
+    "faq_first_question": "What does a Brava synthetic cedar roof cost?",
+    "faq_first_answer_contains_118133": true,
+    "faq_expand_collapse_works": true,
+    "project_proof_images_loaded": ["proof-hickman.webp","siding-install.webp","windows-install.webp","google-5-star.png"],
+    "project_proof_has_5_0_229_text": true,
+    "project_proof_has_gilda_and_amy_quotes": true,
+    "footer_carmel_address": "3077 E 98th St, Suite 275 / Carmel, IN 46280",
+    "footer_burr_ridge_address": "8004 S Madison St / Burr Ridge, IL 60527",
+    "footer_phone_main": "317-662-2169",
+    "footer_burr_phone_visible": true,
+    "footer_email": "info@lockeladder.com",
+    "footer_hours_complete": true,
+    "final_cta_cost_href": "/cost-scope-index/",
+    "final_cta_start_href": "/start-here/",
+    "h1_font_family": "\"Termina Test\", Inter, sans-serif",
+    "no_emojis": true,
+    "no_em_dash": true,
+    "no_forbidden_phone_463": true,
+    "no_forbidden_domain_lockeandladder": true,
+    "horizontal_overflow_1440": "sw=1440 cw=1440 OK",
+    "horizontal_overflow_768": "sw=768 cw=768 OK",
+    "horizontal_overflow_390": "no overflow detected",
+    "mobile_toggle_visible_at_390": true,
+    "desktop_links_hidden_at_390": true,
+    "aria_expanded_flips_false_to_true": true,
+    "mobile_link_count_in_dom_when_open": 7,
+    "js_click_on_mobile_nav_link_navigates": true,
+    "console_errors_filtered": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fix mobile menu overlay sizing in /app/frontend/src/components/site/Nav.jsx: the 'fixed inset-0 top-16 md:top-20 ...' container resolves to height:0 in the rendered Tailwind build. Replace with an explicit-height pattern such as className=\"lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-ink z-40 overflow-y-auto\" (or add h-[calc(100svh-4rem)] md:h-[calc(100svh-5rem)]). After fix, re-verify (a) menu visibly covers the page, (b) tapping a mobile nav link navigates without click-intercept, (c) Escape closes the menu, (d) body scroll is locked while open."
+  ],
+  "critical_code_review_comments": [
+    "Nav.jsx mobile menu uses 'fixed inset-0 top-16 ...' — relying on inset-0 to also set bottom:0 while overriding top can be fragile across Tailwind versions; prefer explicit bottom-0 or a calc height.",
+    "Nav.jsx writes document.body.style.overflow = 'hidden' on open. If the menu container itself has height:0 (current bug), scroll-lock still applies and users may believe the page is frozen with no visible menu.",
+    "Header is z-50 and overlay is z-40 with top-16 — fine in principle, but make sure overlay covers from header bottom edge. Confirmed nav header rect is 0–65px tall, overlay should start at top:64; once heights are fixed, links remain reachable.",
+    "All home sections have data-testid coverage; good for future regression. Consider adding data-testid to FAQ answer container for direct selection.",
+    "No backend usage on this page; REACT_APP_BACKEND_URL is intentionally unused — fine for this static homepage."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "N/A (frontend only)", "frontend": "95% (1 critical mobile-menu visual bug, all other 12 feature areas pass)" },
+  "test_credentials": "Not applicable — public homepage, no auth.",
+  "seed_data_creation": "None.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Homepage rendering, copy, routing, FAQ accordion, footer NAP, forbidden-content check, font, and horizontal-overflow checks all pass at 1440/768/390. The single open bug is the mobile menu container collapsing to height:0 at 390px which makes the overlay transparent and causes click-intercept by the fixed header on mobile-nav-link-*. After main agent fixes Nav.jsx overlay sizing, re-run only the mobile (390px) flow: open menu -> verify menu visually covers viewport -> tap mobile-nav-link-siding navigates to /siding/ and closes menu -> reopen menu and press Escape to confirm close.",
+  "rca of the issue": "Reproduction: viewport 390x844, navigate to /, click [data-testid='mobile-menu-toggle']. Expected: full-screen dark overlay with 7 nav links. Actual: aria-expanded becomes 'true', X icon appears, 7 mobile-nav-link-* elements exist in DOM with correct y-positions (104, 178, 252, ...), but the overlay container's getBoundingClientRect() = {x:0, y:64, width:390, height:0}. Because the container has zero height, its 'bg-ink' background does not paint, the menu visually blends into the hero behind it, document.elementFromPoint(centerOfSidingLink) returns the H1 (proving the link's hit-test area is on top of hero, not on top of an opaque menu surface), and Playwright pointer clicks are intercepted by the fixed <nav> (z-50). JS-driven .click() still triggers navigation, confirming routing is correct. Root cause: the Tailwind class combination 'fixed inset-0 top-16 md:top-20 ...' is not yielding bottom:0 in the final computed style for this build, so the overlay does not stretch to the viewport bottom. Mitigation: in /app/frontend/src/components/site/Nav.jsx replace the overlay className with one that explicitly pins all four sides, e.g. 'lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-ink z-40 overflow-y-auto', or add an explicit height 'h-[calc(100svh-4rem)] md:h-[calc(100svh-5rem)]'."
+}
