@@ -49,6 +49,7 @@ export const Nav = () => {
   }, [open]);
 
   return (
+    <>
     <header
       data-testid="site-nav"
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
@@ -91,11 +92,12 @@ export const Nav = () => {
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
+      </header>
 
       {open && (
         <div
           data-testid="mobile-menu"
-          className="lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-ink z-40 overflow-y-auto"
+          className="lg:hidden fixed inset-x-0 top-16 md:top-20 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] bg-ink z-40 overflow-y-auto"
         >
           <div className="shell py-10 flex flex-col">
             <ul className="flex flex-col">
@@ -134,7 +136,7 @@ export const Nav = () => {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };
 

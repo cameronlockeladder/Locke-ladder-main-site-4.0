@@ -1,0 +1,32 @@
+{
+  "summary": "Retested mobile menu overlay fix at 390x844. Overlay now renders correctly outside the backdrop-blur header as a sibling fragment node with explicit dvh height. All 5 acceptance criteria verified PASS.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "overlay_height": "PASS - height=780px at 390x844 (window.innerHeight 844 - header 64 = 780, exact match), width=390, top=64, position=fixed, z-index=40",
+    "opaque_dark_bg": "PASS - backgroundColor=rgb(17, 17, 17) (bg-ink, fully opaque)",
+    "siding_nav_real_pointer": "PASS - Click on mobile-nav-link-siding navigated to /siding/, rendered data-testid=coming-soon ('Siding is on the way.'), menu auto-closed. No click interception or timeout.",
+    "escape_closes_menu": "PASS - After Escape key: mobile-menu removed from DOM, aria-expanded=false on toggle",
+    "body_scroll_lock": "PASS - body.style.overflow='' before open, 'hidden' while open, '' after close (both via nav-link close and Escape close)",
+    "no_horizontal_overflow_390": "PASS - documentElement.scrollWidth=390, clientWidth=390 (no overflow before or after flow)"
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Nav.jsx: aria-controls=\"mobile-menu\" attribute is missing on the toggle button (the menu has id-equivalent testid but no actual id). Minor a11y nit for screen reader association, not blocking.",
+    "Nav.jsx: Escape handler is always attached (even when menu is closed). Cheap, but could be gated on `open` for cleanliness.",
+    "Nav.jsx: When the overlay is open AND user scrolls main page programmatically before lock applies, there's a single render-frame gap. In practice not user-visible. Acceptable."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "n/a (frontend-only public route)",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Mobile menu overlay containing-block bug is fully resolved. Overlay is a sibling of <header>, fixed top-16 with h-[calc(100dvh-4rem)], bg-ink z-40. Verified at 390x844: height=780, opaque rgb(17,17,17), siding link navigates + closes menu, Escape closes + sets aria-expanded=false, body overflow lock applied/released correctly, no horizontal overflow.",
+  "rca of the issue": "Previously the mobile menu lived INSIDE <header> which had backdrop-filter (backdrop-blur-md) when scrolled/open. backdrop-filter establishes a containing block, so a fixed-positioned child was sized relative to that ancestor (effectively collapsing to header height). Fix: render the overlay as a sibling node of <header> (outside any backdrop-filter ancestor) and use explicit h-[calc(100dvh-4rem)] / md:h-[calc(100dvh-5rem)]. Verified working."
+}
