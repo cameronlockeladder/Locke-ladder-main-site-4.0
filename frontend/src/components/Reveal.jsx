@@ -1,19 +1,45 @@
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
 
-const EASE = [0.22, 1, 0.36, 1];
+// Progressive-enhancement reveal.
+// Content is fully visible by default in the DOM. The hiding class (.reveal) is added
+// ONLY by JS, and only when motion is allowed. If JS is disabled, reduced motion is
+// requested, or the observer never fires, the content remains visible. A safety timer
+// also forces the reveal so animation is never required for text to appear.
+export const Reveal = ({ children, className, delay = 0, as: Tag = "div", ...rest }) => {
+  const ref = useRef(null);
 
-// Subtle, single-fire fade-up used across sections. Respects reduced motion via MotionConfig.
-export const Reveal = ({ children, delay = 0, y = 22, className, ...props }) => (
-  <motion.div
-    className={className}
-    initial={{ opacity: 0, y }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.7, delay, ease: EASE }}
-    {...props}
-  >
-    {children}
-  </motion.div>
-);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || typeof window === "undefined") return undefined;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) return undefined;
+
+    el.classList.add("reveal");
+    let done = false;
+    const show = () => {
+      if (done) return;
+      done = true;
+      el.classList.add("reveal-in");
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && (show(), io.disconnect())),
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
+    );
+    io.observe(el);
+    const t = setTimeout(show, 1400); // fallback: never leave content hidden
+
+    return () => {
+      io.disconnect();
+      clearTimeout(t);
+    };
+  }, []);
+
+  return (
+    <Tag ref={ref} style={delay ? { transitionDelay: `${delay}s` } : undefined} className={className} {...rest}>
+      {children}
+    </Tag>
+  );
+};
 
 export default Reveal;

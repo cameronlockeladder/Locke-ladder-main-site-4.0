@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { Seo } from "@/components/seo/Seo";
+import { ROBOTS, SITE } from "@/data/siteMeta";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 
 // Lightweight placeholder so navigation targets resolve cleanly.
 // The full service / cost / area pages are intentionally not built in this task.
 export default function ComingSoon({ title = "Page" }) {
+  const seo = {
+    metaTitle: `${title} - Locke & Ladder`,
+    metaDescription: "This Locke & Ladder page is in progress.",
+    robots: ROBOTS,
+    canonical: `${SITE.baseUrl}/`,
+  };
   return (
     <>
+      <Seo seo={seo} />
       <Nav />
       <main data-testid="coming-soon" className="flex min-h-[100svh] items-center bg-ink">
         <div className="shell py-40">
@@ -16,8 +25,8 @@ export default function ComingSoon({ title = "Page" }) {
             {title} is on the way.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-paper/65 md:text-lg">
-            This page is not built yet. The homepage is the live experience for now. Head back and start
-            with the question that matters most.
+            This page is not built yet. The homepage and the roofing page are the live experiences for now.
+            Head back and start with the question that matters most.
           </p>
           <Link
             to="/"

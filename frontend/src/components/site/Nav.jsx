@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, NAP } from "@/data/content";
+import { NAV_LINKS, NAP } from "@/data/siteMeta";
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, "-").replace(/(^-|-$)/g, "");
 

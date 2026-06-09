@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NAP, NAV_LINKS } from "@/data/content";
+import { NAP, NAV_LINKS } from "@/data/siteMeta";
 
 export const Footer = () => (
   <footer data-testid="site-footer" className="border-t border-line bg-ink-2">

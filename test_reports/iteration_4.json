@@ -1,0 +1,38 @@
+{
+  "summary": "Iteration 4: Frontend-only end-to-end review of the Locke & Ladder refactor. Verified homepage (/), new /roofing/ ServicePageTemplate, ComingSoon stubs, visible-by-default content, mobile nav, routing, no horizontal overflow, runtime SEO + JSON-LD, FAQ schema-to-visible-copy parity, footer NAP, and confirmed Emergent/PostHog scripts and badge are fully removed. All 11 acceptance criteria PASS. No console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "1_home_sections_in_order": "PASS - all 12 sections present: site-nav, hero, direct-answer, what-we-do, cost-ranges, how-we-work, founder, project-proof, where-we-work, faq, final-cta, site-footer. Hero H1 exactly 'Because the details matter.' (opacity 1). Trust signal '5.0 across 229 public reviews' present. /images/hero-home.jpg loaded (naturalWidth 1920).",
+    "2_roofing_page": "PASS - /roofing/ renders [data-testid=service-page] with data-slug='roofing'. service-hero present with H1 'Roofing that respects the whole house.', service-direct-answer present, primary CTA 'Start with your roof' -> /start-here/, secondary CTA 'See roof cost ranges' -> /cost-scope-index/. All sections present: service-hero, service-decision, service-materials, cost-ranges (with $118,133 / $26,804 / $1,657 all visible), service-inspect, project-proof, faq, where-we-work, service-related, final-cta. Hero image /images/brava-hickman.jpg loaded.",
+    "3_roofing_faq": "PASS - 6 accordion items (faq-item-0..5). 'What does a Brava roof cost?' expands and answer contains '$118,133'. 'Why are roof bids so different?' expands and answer contains 'scope gap'.",
+    "4_visible_by_default": "PASS - Hero H1 opacity=1 immediately on load (no scroll). After scrolling to where-we-work below the fold: sectionOpacity=1, headingOpacity=1. With prefers-reduced-motion: reduce emulated, hero opacity still 1 and where-we-work present in DOM.",
+    "5_mobile_nav_390x844": "PASS - Toggle present. Menu opens at height=780 (window.innerHeight 844 - 64 header = 780), width=390. body.style.overflow='hidden' while open. Tapping mobile-nav-link-siding navigates to /siding/, renders [data-testid=coming-soon], closes menu. Escape closes menu (DOM removed) and releases body lock.",
+    "6_routing": "PASS - Desktop nav-link-roofing -> /roofing/ (service-page rendered). nav-link-windows-doors -> /windows-doors/ (coming-soon rendered). WhatWeDo 'Roofing' anchor href=/roofing/, text 'Roofing'.",
+    "7_no_horizontal_overflow": "PASS - At 390px / 768px / 1440px on both '/' and '/roofing/': documentElement.scrollWidth == clientWidth (no overflow).",
+    "8_seo_runtime_injection_roofing": "PASS - document.title='Roofing for High-End Homes - Brava, Standing Seam, Slate | Locke & Ladder' (contains 'Roofing' and 'Locke & Ladder'). meta[name=robots]='noindex,nofollow'. link[rel=canonical] href='https://lockeladder.com/roofing/'. One ld+json script with @graph containing @type RoofingContractor + Service + FAQPage (and WebPage, BreadcrumbList, LocalBusiness, HomeAndConstructionBusiness). Home ld+json contains RoofingContractor, Dataset, and FAQPage.",
+    "9_faq_schema_matches_visible_copy": "PASS - Roofing: 6 visible questions match 6 schema mainEntity entries (all qMatch=true, aMatch=true). Home: 8 visible questions match 8 schema mainEntity entries (all qMatch=true, aMatch=true).",
+    "10_no_console_errors": "PASS - 0 console errors on '/' and '/roofing/' loads. No emergent/posthog scripts detected (only static/js/bundle.js, which is the React app bundle). No Emergent badge in DOM.",
+    "11_footer_NAP_both_pages": "PASS - On both '/' and '/roofing/': Carmel 3077 E 98th St / Carmel, Burr Ridge 8004 S Madison / Burr Ridge, 317-662-2169, 708-859-6942, info@lockeladder.com all present."
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Seo.jsx: useEffect cleanup correctly removes its own injected ld+json script on unmount and re-injects on route change. Clean.",
+    "schemaBuilders.js: All schema nodes wrapped in a single @graph script tag - this is the recommended approach for multi-entity JSON-LD and reduces head clutter.",
+    "Roofing FAQ JSON-LD acceptedAnswer.text matches visible answer text verbatim - good answer-engine hygiene.",
+    "Canonical points to https://lockeladder.com/roofing/ even on the staging preview domain. This is intentional per TEMPLATE_HANDOFF.md (canonical reflects production domain) and robots is noindex,nofollow on staging, so this is safe.",
+    "ServicePageTemplate appears to be data-driven and reusable; future service pages can be added by copying /app/frontend/src/data/servicePages/roofing.js. No coupling to roofing-specific copy was observed in the template."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "n/a (public frontend-only)",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 11 acceptance criteria from the iteration-4 review request are verified PASS on https://locke-ladder-home.preview.emergentagent.com. Homepage and the new /roofing/ page both pass: structure, copy, images, CTAs, visible-by-default content, mobile nav, routing, no overflow at 390/768/1440, runtime SEO meta + canonical + robots, JSON-LD @graph (RoofingContractor + Dataset + FAQPage on home; Service + FAQPage + breadcrumb on roofing), FAQ schema matches visible copy exactly (8/8 on home, 6/6 on roofing), footer NAP on both pages, no Emergent badge or PostHog scripts, no console errors. Mobile menu overlay (fixed in iteration 3) still works: height=780 at 390x844, body scroll lock, siding nav closes menu, Escape closes menu."
+}

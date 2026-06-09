@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 
-export const Hero = ({ hero }) => (
-  <section data-testid="hero" className="relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-end">
+// Service-page hero. Mirrors the home hero but leads with a direct-answer paragraph
+// (first ~150 words) for answer-engine extraction.
+export const ServiceHero = ({ hero }) => (
+  <section data-testid="service-hero" className="relative min-h-[88svh] w-full overflow-hidden flex flex-col justify-end">
     <img
       src={hero.image.src}
       width={hero.image.w}
@@ -13,25 +15,25 @@ export const Hero = ({ hero }) => (
       alt={hero.image.alt}
       className="absolute inset-0 h-full w-full object-cover"
     />
-    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" aria-hidden="true" />
+    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/15" aria-hidden="true" />
     <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" aria-hidden="true" />
 
     <div className="relative shell pb-12 pt-28 md:pb-16">
-      <p className="eyebrow" data-testid="hero-eyebrow">{hero.eyebrow}</p>
+      <p className="eyebrow" data-testid="service-hero-eyebrow">{hero.eyebrow}</p>
       <h1
-        data-testid="hero-h1"
-        className="font-display mt-5 max-w-[16ch] text-[2.7rem] leading-[0.98] tracking-tight text-paper sm:text-6xl lg:text-7xl text-balance"
+        data-testid="service-hero-h1"
+        className="font-display mt-5 max-w-[18ch] text-[2.5rem] leading-[1.0] tracking-tight text-paper sm:text-6xl lg:text-7xl text-balance"
       >
         {hero.h1}
       </h1>
-      <p data-testid="hero-lead" className="mt-6 max-w-2xl text-base leading-relaxed text-paper/85 md:text-lg text-pretty">
-        {hero.lead}
+      <p data-testid="service-direct-answer" className="mt-6 max-w-3xl text-base leading-relaxed text-paper/85 md:text-lg text-pretty">
+        {hero.directAnswer}
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Link
           to={hero.primaryCta.href}
-          data-testid="hero-cta-primary"
+          data-testid="service-cta-primary"
           className="group inline-flex items-center justify-center gap-2 bg-paper px-7 py-4 text-sm font-medium tracking-wide text-ink transition-colors duration-200 hover:bg-copper hover:text-paper"
         >
           {hero.primaryCta.label}
@@ -39,26 +41,14 @@ export const Hero = ({ hero }) => (
         </Link>
         <Link
           to={hero.secondaryCta.href}
-          data-testid="hero-cta-secondary"
+          data-testid="service-cta-secondary"
           className="inline-flex items-center justify-center gap-2 border border-paper/40 px-7 py-4 text-sm font-medium tracking-wide text-paper transition-colors duration-200 hover:bg-paper/10"
         >
           {hero.secondaryCta.label}
         </Link>
       </div>
-
-      <ul
-        data-testid="hero-trust-signals"
-        className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-6 text-xs tracking-wide text-paper/65 sm:text-sm"
-      >
-        {hero.trustSignals.map((t, i) => (
-          <li key={t} className="flex items-center gap-x-5">
-            {i > 0 && <span className="hidden h-3 w-px bg-paper/25 sm:inline-block" aria-hidden="true" />}
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 );
 
-export default Hero;
+export default ServiceHero;
