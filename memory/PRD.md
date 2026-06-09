@@ -20,6 +20,14 @@ High-end homeowner in Indianapolis metro / western Chicago suburbs evaluating a 
 - Required JSON-LD types, canonical, title, meta description, robots.
 - Fully responsive, no horizontal overflow, usable mobile nav, semantic HTML, alt text + image dimensions, hero prioritized / below-fold lazy-loaded.
 
+## Implemented (2026-06-08) - Template Refactor
+- Refactored the single homepage into reusable, data-driven templates: `templates/HomePageTemplate.jsx` (driven by `data/homePageData.js`) and `templates/ServicePageTemplate.jsx` (driven by service data objects). Added global `data/siteMeta.js` (brand, NAP, nav, regions, reviews, ROBOTS policy).
+- Built a real `/roofing/` page (`data/servicePages/roofing.js` + registry `servicePages/index.js` + `pages/ServicePage.jsx`) proving the service template: hero/direct-answer, "roofing is a system" decision block, materials with tradeoffs, cost snapshot, inspection checklist, proof, 6-item FAQ, service areas, related services, final CTA. New service sections under `components/service/`.
+- SEO moved to runtime per-route injection: `components/seo/Seo.jsx` (title/meta/canonical/OG) + `components/seo/schemaBuilders.js` (LocalBusiness/RoofingContractor, WebSite, WebPage, Service, FAQPage, BreadcrumbList, Dataset). FAQ schema is generated from the same data the FAQ renders, so it always matches (verified 8/8 home, 6/6 roofing).
+- Audit fixes: removed Emergent badge + emergent-main.js + PostHog snippet + injected error script from `index.html`; staging robots set to `noindex,nofollow`; `Reveal.jsx` rewritten so content is visible by default (hide-class added only by JS when motion allowed, with safety timer; reduced-motion safe). Removed framer-motion.
+- Dependency cleanup: removed ~45 unused deps (framer-motion, axios, react-query, most radix/shadcn, recharts, embla, vaul, cmdk, etc.) and all unused shadcn ui components except `accordion`. Clean `yarn install --frozen-lockfile` passes (no --legacy-peer-deps); production build passes (JS 141KB->102KB, CSS 11KB->5.5KB gzipped). `TEMPLATE_HANDOFF.md` documents architecture, reuse steps, and production-launch changes. Backend scaffold left in place for env health but excluded from the production port (documented).
+- Verified by testing agent (iteration_4): 11/11 PASS, no console errors, no horizontal overflow at 390/768/1440 on both `/` and `/roofing/`.
+
 ## Implemented (2026-06-08)
 - 11 homepage sections: Hero, Direct Answer intro, What We Do (6 systems), Real Cost Ranges (editorial table + disclaimer), How We Work (5 steps), Founder/Ethos (Jon Strand / Herron School of Art), Project Proof (3 specifics + Gilda Hickman & Amy approved quotes + Google 5-star), Where We Work (IN + IL city lists), Common Questions (8-item FAQ accordion), Final CTA, Footer with visible NAP (both offices, hours, phone, email).
 - Sticky desktop nav (7 links + Start here CTA) and full-screen mobile overlay nav (Esc-to-close, scroll-lock, aria-controls).
